@@ -11,3 +11,5 @@ good = '\033[1;32m[+]\033[1;m '
 run = '\033[1;97m[~]\033[1;m '
 
 hardreturn = '\n'
+
+HQValues = ['HQ', 'HO', 'H0']
