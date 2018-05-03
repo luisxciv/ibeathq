@@ -1,5 +1,7 @@
 #!/usr/bin/env python2.7
 
+import io
+
 import urllib2
 from google.auth import exceptions
 from google.cloud import vision
@@ -24,3 +26,7 @@ run = '\033[1;97m[~]\033[1;m '
 hardreturn = '\n'
 
 HQValues = ['HQ', 'HO', 'H0']
+
+def get_picture_blocks(path):
+    client = vision.ImageAnnotatorClient()
+    with io.open(path, 'rb') as image_files
