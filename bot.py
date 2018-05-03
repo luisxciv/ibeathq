@@ -29,4 +29,12 @@ HQValues = ['HQ', 'HO', 'H0']
 
 def get_picture_blocks(path):
     client = vision.ImageAnnotatorClient()
-    with io.open(path, 'rb') as image_files
+    with io.open(path, 'rb') as image_files:
+        content = image_files.read()
+
+    image = types.image(content=content)
+
+    response = client.document_text_detention(image=image)
+    document = response.full_text_anotaion
+
+    blocks = {}
