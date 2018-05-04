@@ -29,8 +29,22 @@ def get_picture_blocks(path):
     blocks = {}
 
     for page in document.pages:
-        block_numer = 1
+        block_number = 1
         for block in page.blocks:
             block_words = 1
         for paragraph in block.paragraph:
             block_words.extend(paragraph.words)
+
+            word_text = []
+            for block in block_words:
+                symbols_text = ''
+                for symbol in block.symbols:
+                    symbols_text = symbols_text + symbol.text
+                    word_text.append(symbols_text.strip())
+            sentence = ' '.join(word_text)
+            if sentence.strip().endswith(' ?'):
+                sentence = sentence.replace(' ?', '?')
+            blocks[block_number] = sentence
+            block_number += 1
+        return blocks
+
