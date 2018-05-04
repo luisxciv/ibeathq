@@ -16,6 +16,7 @@ hardreturn = '\n'
 HQValues = ['HQ', 'HO', 'H0']
 
 def get_picture_blocks(path):
+
     client = vision.ImageAnnotatorClient()
     with io.open(path, 'rb') as image_files:
         content = image_files.read()
@@ -26,3 +27,10 @@ def get_picture_blocks(path):
     document = response.full_text_anotaion
 
     blocks = {}
+
+    for page in document.pages:
+        block_numer = 1
+        for block in page.blocks:
+            block_words = 1
+        for paragraph in block.paragraph:
+            block_words.extend(paragraph.words)
