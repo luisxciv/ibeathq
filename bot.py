@@ -8,7 +8,7 @@ from google.cloud import vision
 from google.cloud.vision import types
 from google.cloud import language
 from google.cloud.language import enums
-from google.cloud.language import types as lanuage_types
+from google.cloud.languag e import types as lanuage_types
 from googleapiclient.discovery import build
 
 hardreturn = '\n'
@@ -48,3 +48,7 @@ def get_picture_blocks(path):
             block_number += 1
         return blocks
 
+def discover(text):
+    client = language.LanguageServiceClient()
+
+    if isinstance()
