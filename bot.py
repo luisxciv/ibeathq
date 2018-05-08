@@ -14,6 +14,7 @@ from googleapiclient.discovery import build
 hardreturn = '\n'
 
 HQValues = ['HQ', 'HO', 'H0']
+bad = '\033[1;31m[-]\033[1;m '
 
 def get_picture_blocks(path):
 
@@ -109,4 +110,13 @@ def discover(text):
                 print(bad + "Error getting question, defaulting")
                 return blocks[3]
 
-
+def get_answers(question, blocks):
+    try:
+        for key, value in blocks.iteritems():
+            if question in value:
+                return [blocks[key + 1], blocks[key + 2], blocks[key + 3]]
+        print(bad + "Error getting answers, defaulting")
+        return [blocks[4], blocks[5], blocks[6]]
+    except KeyError as e:
+        print(bad + str(e))
+        return [blocks[4], blocks[5], blocks[6]]
