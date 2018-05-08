@@ -2,8 +2,9 @@
 
 import io
 import six
-
+import json
 import urllib2
+
 from google.auth import exceptions
 from google.cloud import vision
 from google.cloud.vision import types
