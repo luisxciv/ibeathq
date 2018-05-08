@@ -46,6 +46,7 @@ def get_picture_blocks(path):
                 sentence = sentence.replace(' ?', '?')
             blocks[block_number] = sentence
             block_number += 1
+
         return blocks
 
 def discover(text):
@@ -69,4 +70,43 @@ def discover(text):
                 results = ' '.join([entities[0].name, entities[1].name])
             except IndexError:
                 results = entities[0].name
+
+        return results
+
+    def read_question(blocks):
+        for key, value in blocks.iteritems():
+            for HQ in HQValues:
+                if HQ in value.upper().strip() and blocks[key + 1].endswith('?'):
+                    return blocks[key + 1]
+                try:
+                    test = int(value)
+                    if test > 0 and blocks[key + 1].endswith('?'):
+                        return blocks[key + 1]
+                    if test > 0 and blocks[key + 2].endswith('?'):
+                        return blocks[key + 2]
+                    if test > 0 and blocks[key + 3].endswith('?'):
+                        return blocks[key + 3]
+                except ValueError, KeyError:
+                    pass
+                try:
+                    if 'K' in value.upper().strip() and blocks[key + 1].endswith('?'):
+                        return blocks[key + 1]
+                    if 'K' in value.upper().strip() and blocks[key + 2].endswith('?'):
+                        return blocks[key + 2]
+                    if 'K' in value.upper().strip() and blocks[key + 3].endswith('?'):
+                        return blocks[key + 3]
+                except ValueError, KeyError:
+                    pass
+                try:
+                    if 'M' in value.upper().strip() and blocks[key + 1].endswith('?'):
+                        return blocks[key + 1]
+                    if 'M' in value.upper().strip() and blocks[key + 2].endswith('?'):
+                        return blocks[key + 2]
+                    if 'M' in value.upper().strip() and blocks[key + 3].endswith('?'):
+                        return blocks[key + 3]
+                except ValueError, KeyError:
+                    pass
+                print(bad + "Error getting question, defaulting")
+                return blocks[3]
+
 
