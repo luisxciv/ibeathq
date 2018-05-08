@@ -1,6 +1,7 @@
 #!/usr/bin/env python2.7
 
 import io
+import six
 
 import urllib2
 from google.auth import exceptions
@@ -10,7 +11,6 @@ from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types as lanuage_types
 from googleapiclient.discovery import build
-
 hardreturn = '\n'
 
 HQValues = ['HQ', 'HO', 'H0']
@@ -49,6 +49,24 @@ def get_picture_blocks(path):
         return blocks
 
 def discover(text):
+
     client = language.LanguageServiceClient()
 
-    if isinstance()
+    if isinstance(text, six.binary_type):
+        text = text.decode('utf-8')
+
+        document = lanuage_types.Document(
+            content=text,
+            type=enums.Document.Type.PLAIN_TEXT)
+
+        entities = client.analyze_entities(document).entities
+
+        try:
+            results = ' '.join(
+                [entities[0].name, entities[1].name, entities[2].name])
+        except IndexError:
+            try:
+                results = ' '.join([entities[0].name, entities[1].name])
+            except IndexError:
+                results = entities[0].name
+
