@@ -2,8 +2,6 @@
 
 import io
 import six
-import json
-import urllib2
 
 from google.auth import exceptions
 from google.cloud import vision
@@ -12,6 +10,8 @@ from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types as lanuage_types
 from googleapiclient.discovery import build
+
+
 hardreturn = '\n'
 
 HQValues = ['HQ', 'HO', 'H0']
@@ -29,7 +29,7 @@ def get_picture_blocks(path):
     document = response.full_text_anotaion
 
     blocks = {}
-
+#For loop to separate words into blocks and define a sentence
     for page in document.pages:
         block_number = 1
         for block in page.blocks:
@@ -52,7 +52,7 @@ def get_picture_blocks(path):
         return blocks
 
 def discover(text):
-
+#google cloud language API integration
     client = language.LanguageServiceClient()
 
     if isinstance(text, six.binary_type):
@@ -63,7 +63,7 @@ def discover(text):
             type=enums.Document.Type.PLAIN_TEXT)
 
         entities = client.analyze_entities(document).entities
-
+#analyze the blocks with the learning engine
         try:
             results = ' '.join(
                 [entities[0].name, entities[1].name, entities[2].name])
@@ -74,7 +74,7 @@ def discover(text):
                 results = entities[0].name
 
         return results
-
+#Read question
     def read_question(blocks):
         for key, value in blocks.iteritems():
             for HQ in HQValues:
