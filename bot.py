@@ -2,6 +2,8 @@
 
 import io
 import six
+import os
+import ConfigParser
 
 from google.auth import exceptions
 from google.cloud import vision
@@ -121,3 +123,11 @@ def get_answers(question, blocks):
     except KeyError as e:
         print(bad + str(e))
         return [blocks[4], blocks[5], blocks[6]]
+
+
+
+
+if __name__ == "__main__":
+    try:
+        config = ConfigParser.RawConfigParser()
+        config.read(os.path.join(os.path.dirname(__file__), 'bot.cfg'))
