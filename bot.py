@@ -124,6 +124,25 @@ def get_answers(question, blocks):
         print(bad + str(e))
         return [blocks[4], blocks[5], blocks[6]]
 
+def search_entity(service, question, answers, queue):
+    question = get_entity(question)
+    return search(service, question, answers, queue)
+
+
+def search(service, question, answers, queue):
+    try:
+        query = '"' + question + '"' + ' (' + ' OR '.join(answers) + ')'
+        results = service.cse().list(q=question, cx=customsearch_id,
+                                     num=int(customsearch_results)).execute()
+        if queue:
+            return queue.put(results)
+        if args.verbose:
+            print(que + 'Query #1: ' + query + hardreturn)
+        return results
+    except SSLError:
+        print(bad + 'SSL Error encountered, please wait for threads to finish.')
+    except Exception as e:
+        print(bad + str(e))
 
 
 
@@ -131,3 +150,8 @@ if __name__ == "__main__":
     try:
         config = ConfigParser.RawConfigParser()
         config.read(os.path.join(os.path.dirname(__file__), 'bot.cfg'))
+
+    customsearch_results = config.get('bot_config', 'customsearch_results')
+    customsearch_id = config.get('bot_config', 'customsearch_id')
+    customsearch_developerKey = config.get(
+        'bot_config', 'customsearch_developerKey')
