@@ -155,3 +155,14 @@ if __name__ == "__main__":
     customsearch_id = config.get('bot_config', 'customsearch_id')
     customsearch_developerKey = config.get(
         'bot_config', 'customsearch_developerKey')
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-v", "--verbose",
+                        help="increase output verbosity", action="store_true")
+    parser.add_argument("-a", "--android",
+                        help="use android device (adb)", action="store_true")
+    parser.add_argument("-s", "--sample",
+                        help="use sample images", action="store_true")
+    parser.add_argument("-i", "--input_file",
+                        help="use specific images")
+    args = parser.parse_args()
