@@ -162,7 +162,7 @@ def search(service, question, answers, queue):
 
 def choose(answer):
     print(good + 'Choose ' + green + answer + end)
-
+#
 
 def print_answers(num, answer, count):
     print(good + 'Answer %s: %s' % (str(num), answer) + green +
