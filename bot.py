@@ -5,6 +5,10 @@ import six
 import os
 import ConfigParser
 
+
+from ssl import SSLError
+
+
 from google.auth import exceptions
 from google.cloud import vision
 from google.cloud.vision import types
