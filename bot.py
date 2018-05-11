@@ -168,6 +168,8 @@ def print_answers(num, answer, count):
     print(good + 'Answer %s: %s' % (str(num), answer) + green +
           ' Found: ' + str(count) + ' results' + end)
 
+def find_answer(path):
+
 if __name__ == "__main__":
     try:
         config = ConfigParser.RawConfigParser()
