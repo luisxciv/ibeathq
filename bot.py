@@ -78,7 +78,7 @@ def discover(text):
         document = lanuage_types.Document(
             content=text,
             type=enums.Document.Type.PLAIN_TEXT)
-
+###
         entities = client.analyze_entities(document).entities
 #analyze the blocks with the learning engine
         try:
