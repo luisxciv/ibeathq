@@ -67,7 +67,7 @@ def get_picture_blocks(path):
             block_number += 1
 
         return blocks
-
+###
 def discover(text):
 #google cloud language API integration
     client = language.LanguageServiceClient()
