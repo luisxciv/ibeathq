@@ -189,6 +189,7 @@ def find_answer(path):
             except IndexError:
                 print("Error")
 
+                ###here we start searching for answers and selecting the most common ones
 
 if __name__ == "__main__":
     try:
