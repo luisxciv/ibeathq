@@ -171,8 +171,14 @@ def print_answers(num, answer, count):
 def find_answer(path):
     blocks = get_blocks(path)
     question = get_question(blocks)
+    print(que + 'Question: ' + question + hardreturn)
     answers = get_answers(question, blocks)
+    service = build("customsearch", "v1",
+                    developerKey=customsearch_developerKey)
 
+    results1 = search(service, question, answers, None)
+
+    keywords = question.split()
 if __name__ == "__main__":
     try:
         config = ConfigParser.RawConfigParser()
