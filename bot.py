@@ -181,7 +181,9 @@ def find_answer(path):
     keywords = question.split()
 
     try:
-        question2 = ''.join([keywords])
+        question2 = ''.join([keywords[-1], keywords[-2], keywords[-3]])
+        
+
 if __name__ == "__main__":
     try:
         config = ConfigParser.RawConfigParser()
