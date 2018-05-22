@@ -179,6 +179,9 @@ def find_answer(path):
     results1 = search(service, question, answers, None)
 
     keywords = question.split()
+
+    try:
+        question2 = ''.join([keywords])
 if __name__ == "__main__":
     try:
         config = ConfigParser.RawConfigParser()
