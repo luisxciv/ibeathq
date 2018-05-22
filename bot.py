@@ -182,7 +182,13 @@ def find_answer(path):
 
     try:
         question2 = ''.join([keywords[-1], keywords[-2], keywords[-3]])
-        
+    except IndexError:
+        try: question2 = ''.join([keywords[-1], keywords[-2]])
+        except IndexError:
+            try: question2 = keywords[-1]
+            except IndexError:
+                print("Error")
+
 
 if __name__ == "__main__":
     try:
