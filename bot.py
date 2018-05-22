@@ -169,6 +169,9 @@ def print_answers(num, answer, count):
           ' Found: ' + str(count) + ' results' + end)
 
 def find_answer(path):
+    blocks = get_blocks(path)
+    question = get_question(blocks)
+    answers = get_answers(question, blocks)
 
 if __name__ == "__main__":
     try:
