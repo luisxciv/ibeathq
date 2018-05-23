@@ -4,6 +4,9 @@ import io
 import six
 import os
 import ConfigParser
+import threading
+import Queue
+import argparse
 
 
 from ssl import SSLError
@@ -92,7 +95,7 @@ def discover(text):
 
         return results
 #Read question
-    def read_question(blocks):
+def read_question(blocks):
         for key, value in blocks.iteritems():
             for HQ in HQValues:
                 if HQ in value.upper().strip() and blocks[key + 1].endswith('?'):
@@ -140,7 +143,7 @@ def get_answers(question, blocks):
         return [blocks[4], blocks[5], blocks[6]]
 
 def search_entity(service, question, answers, queue):
-    question = get_entity(question)
+    question = discover(question)
     return search(service, question, answers, queue)
 
 
@@ -169,8 +172,8 @@ def print_answers(num, answer, count):
           ' Found: ' + str(count) + ' results' + end)
 
 def find_answer(path):
-    blocks = get_blocks(path)
-    question = get_question(blocks)
+    blocks = get_picture_blocks(path)
+    question = read_question(blocks)
     print(que + 'Question: ' + question + hardreturn)
     answers = get_answers(question, blocks)
     service = build("customsearch", "v1",
@@ -189,7 +192,18 @@ def find_answer(path):
             except IndexError:
                 print("Error")
 
+
                 ###here we start searching for answers and selecting the most common ones
+                results2_queue = Queue.Queue()
+                search2 = threading.Thread(target=search, args=(
+                    service, question2, answers, results2_queue))
+                search2.start()
+
+                search3 = threading.Thread(target=search_entity, args=(
+                    service, question, answers, results2_queue))
+                search3.start()
+
+                items = json.dumps(results1['items'])
 
 if __name__ == "__main__":
     try:
