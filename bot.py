@@ -10,9 +10,7 @@ import argparse
 import json
 
 
-
 from ssl import SSLError
-
 
 from google.auth import exceptions
 from google.cloud import vision
@@ -206,6 +204,11 @@ def find_answer(path):
                 search3.start()
 
                 items = json.dumps(results1['items'])
+                
+                countanswer1 = items.count(answers[1])
+                countanswer2 = items.count(answers[2])
+                countanswer3 = items.count(answers[3])
+
 
 if __name__ == "__main__":
     try:
