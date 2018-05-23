@@ -204,11 +204,16 @@ def find_answer(path):
                 search3.start()
 
                 items = json.dumps(results1['items'])
-                
+
                 countanswer1 = items.count(answers[1])
                 countanswer2 = items.count(answers[2])
                 countanswer3 = items.count(answers[3])
 
+
+                    print(info + 'Google Answers:')
+                        print_answers(1, answers[0], countanswer1)
+                        print_answers(2, answers[1], countanswer2)
+                        print_answers(3, answers[2], countanswer3)
 
 if __name__ == "__main__":
     try:
