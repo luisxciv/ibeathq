@@ -8,6 +8,7 @@ import threading
 import Queue
 import argparse
 import json
+import urllib2
 
 
 from ssl import SSLError
@@ -213,6 +214,9 @@ def find_answer(path):
                 print_answers(2, answers[1], countanswer2)
                 print_answers(3, answers[2], countanswer3)
                 if countanswer1 == countanswer2 and countanswer2 == countanswer3:
+                    search2.join()
+                    search3.join()
+                    results2 = results2_queue.get()
 
 if __name__ == "__main__":
     try:
