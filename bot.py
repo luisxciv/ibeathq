@@ -257,3 +257,23 @@ if __name__ == "__main__":
         if not os.path.exists(folder):
             os.makedirs(folder)
         print(info + "connect your device through ADB" + hardreturn)
+
+        questionnum = 1
+        while questionnum <= 15:
+            screencap_name = strftime(
+                "%Y-%m-%d_%H-%M-%S", gmtime()) + '_' + str(questionnum) + '.png'
+            raw_input(
+                que + 'Click enter when question is on the screen ')
+            os.system(
+                'adb shell screencap -p /sdcard/HQ/' + screencap_name)
+            os.system('adb pull /sdcard/HQ/' + screencap_name)
+            screencap_file = os.path.join(
+                os.path.dirname(__file__), screencap_name)
+            find_answer(screencap_file)
+            os.rename(screencap_file, os.path.join(
+                folder, screencap_name))
+            os.system('adb shell rm /sdcard/HQ/' +
+                      screencap_name)
+            questionnum += 1
+    elif args.input_file:
+        find_answer(os.path.join)
