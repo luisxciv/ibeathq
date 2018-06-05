@@ -244,3 +244,9 @@ if __name__ == "__main__":
     parser.add_argument("-i", "--input_file",
                         help="use specific images")
     args = parser.parse_args()
+
+    if args.android:
+        HQTriviaUrl = ""
+        HQTriviaResponse = json.load(urllib2.urlopen(HQTriviaUrl))
+        if not HQTriviaResponse["active"]:
+            print("Hq is not live right now")
