@@ -254,3 +254,6 @@ if __name__ == "__main__":
             print("Hq is not live right now")
 
         folder = os.path.join(os.path.dirname(__file__), 'screenshots', str(strftime("%Y-%m-%d", gmtime())))
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+        print(info + "connect your device through ADB" + hardreturn)
