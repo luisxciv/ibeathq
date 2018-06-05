@@ -236,16 +236,29 @@ if __name__ == "__main__":
             print ("API keys misconfigured")
             exit(1)
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-v", "--verbose",
+        parser = argparse.ArgumentParser()
+        parser.add_argument("-v", "--verbose",
                         help="increase output verbosity", action="store_true")
-    parser.add_argument("-i", "--input_file",
+        parser.add_argument("-i", "--input_file",
                         help="use specific images")
-    args = parser.parse_args()
+        args = parser.parse_args()
 
 
-    if args.input_file:
-        find_answer(os.path.join(
-            os.path.dirname(__file__), args.input.file)
-        )
+        if args.input_file:
+            find_answer(os.path.join(
+                os.path.dirname(__file__), args.input.file)
+            )
+        elif args.sample:
+            sample_file_names = [
+                'test_question.jpeg', 'test_question2.png', 'test_question3.jpg']
+            for file_name in sample_file_names:
+                find_answer(os.path.join(os.path.dirname(__file__), file_name))
+        else:
+            parser.print_help()
 
+    except KeyboardInterrupt:
+        print(hardreturn + bad + 'Exiting...')
+        exit(0)
+    except Exception as e:
+        print(bad + '%s: %s' % (type(e).__name__, str(e)))
+        pass
