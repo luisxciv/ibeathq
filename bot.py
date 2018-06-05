@@ -222,7 +222,10 @@ if __name__ == "__main__":
     try:
         config = ConfigParser.RawConfigParser()
         config.read(os.path.join(os.path.dirname(__file__), 'bot.cfg'))
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = config.get(
+        'bot_config', 'GOOGLE_APPLICATION_CREDENTIALS')
 
+        if not
     customsearch_results = config.get('bot_config', 'customsearch_results')
     customsearch_id = config.get('bot_config', 'customsearch_id')
     customsearch_developerKey = config.get(
