@@ -1,4 +1,5 @@
 #!/usr/bin/env python2.7
+
 import io
 import os
 import six
@@ -17,8 +18,8 @@ from google.cloud.language import enums
 from google.cloud.language import types as lanuage_types
 from googleapiclient.discovery import build
 
-from time import strftime, gmtime
 
+hardreturn = '\n'
 white = '\033[1;97m'
 green = '\033[1;32m'
 red = '\033[1;31m'
@@ -31,9 +32,11 @@ que = '\033[1;34m[?]\033[1;m '
 bad = '\033[1;31m[-]\033[1;m '
 good = '\033[1;32m[+]\033[1;m '
 run = '\033[1;97m[~]\033[1;m '
-
 HQValues = ['HQ', 'HO', 'H0']
+bad = '\033[1;31m[-]\033[1;m '
+
 def get_picture_blocks(path):
+
     client = vision.ImageAnnotatorClient()
 
     with io.open(path, 'rb') as image_file:
@@ -41,11 +44,11 @@ def get_picture_blocks(path):
 
     image = types.image(content=content)
 
-    response = client.document_text_detection(image=image)
-    document = response.full_text_annotation
+    response = client.document_text_detention(image=image)
+    document = response.full_text_anotaion
 
     blocks = {}
-
+#For loop to separate words into blocks and define a sentence
     for page in document.pages:
         block_number = 1
         for block in page.blocks:
