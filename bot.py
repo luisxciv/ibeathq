@@ -10,6 +10,8 @@ import argparse
 import json
 import urllib2
 
+from time import strftime, gmtime
+
 
 from ssl import SSLError
 
@@ -250,3 +252,5 @@ if __name__ == "__main__":
         HQTriviaResponse = json.load(urllib2.urlopen(HQTriviaUrl))
         if not HQTriviaResponse["active"]:
             print("Hq is not live right now")
+
+        folder = os.path.join(os.path.dirname(__file__), 'screenshots', str(strftime("%Y-%m-%d", gmtime())))
