@@ -1,20 +1,14 @@
 #!/usr/bin/env python2.7
-
 import io
-import six
 import os
-import ConfigParser
-import threading
-import Queue
-import argparse
+import six
 import json
+import Queue
 import urllib2
-
-from time import strftime, gmtime
-
-
+import argparse
+import threading
+import ConfigParser
 from ssl import SSLError
-
 from google.auth import exceptions
 from google.cloud import vision
 from google.cloud.vision import types
@@ -23,8 +17,8 @@ from google.cloud.language import enums
 from google.cloud.language import types as lanuage_types
 from googleapiclient.discovery import build
 
+from time import strftime, gmtime
 
-hardreturn = '\n'
 white = '\033[1;97m'
 green = '\033[1;32m'
 red = '\033[1;31m'
@@ -37,22 +31,21 @@ que = '\033[1;34m[?]\033[1;m '
 bad = '\033[1;31m[-]\033[1;m '
 good = '\033[1;32m[+]\033[1;m '
 run = '\033[1;97m[~]\033[1;m '
+
 HQValues = ['HQ', 'HO', 'H0']
-bad = '\033[1;31m[-]\033[1;m '
-
 def get_picture_blocks(path):
-
     client = vision.ImageAnnotatorClient()
-    with io.open(path, 'rb') as image_files:
-        content = image_files.read()
+
+    with io.open(path, 'rb') as image_file:
+        content = image_file.read()
 
     image = types.image(content=content)
 
-    response = client.document_text_detention(image=image)
-    document = response.full_text_anotaion
+    response = client.document_text_detection(image=image)
+    document = response.full_text_annotation
 
     blocks = {}
-#For loop to separate words into blocks and define a sentence
+
     for page in document.pages:
         block_number = 1
         for block in page.blocks:
@@ -84,7 +77,6 @@ def discover(text):
         document = lanuage_types.Document(
             content=text,
             type=enums.Document.Type.PLAIN_TEXT)
-###
         entities = client.analyze_entities(document).entities
 #analyze the blocks with the learning engine
         try:
@@ -189,11 +181,12 @@ def find_answer(path):
     try:
         question2 = ''.join([keywords[-1], keywords[-2], keywords[-3]])
     except IndexError:
-        try: question2 = ''.join([keywords[-1], keywords[-2]])
+        try:
+            question2 = ''.join([keywords[-1], keywords[-2]])
         except IndexError:
-            try: question2 = keywords[-1]
+            try:
+                question2 = keywords[-1]
             except IndexError:
-                print("Error")
 
 
                 ###here we start searching for answers and selecting the most common ones
@@ -220,34 +213,62 @@ def find_answer(path):
                     search3.join()
                     results2 = results2_queue.get()
 
+                    items2 = json.dumps(results2['items']).lower()
+
+                    countanswer1 = items.count(answers[0].lower())
+                    countanswer2 = items.count(answers[0].lower())
+                    countanswer3 = items.count(answers[0].lower())
+
+                    if countanswer1 > countanswer2 and countanswer1 > countanswer3:
+                        choose(answers[0])
+                    elif countanswer2 > countanswer1 and countanswer2 > countanswer3:
+                        choose(answers[1])
+                    elif countanswer3 > countanswer1 and countanswer3 > countanswer2:
+                        choose(answers[2])
+                    else:
+                        print(bad + 'Pick that best answer')
+                elif countanswer1 > countanswer2 and countanswer1 > countanswer3:
+                    choose(answers[0])
+                elif countanswer2 > countanswer1 and countanswer2 > countanswer3:
+                    choose(answers[1])
+                elif countanswer3 > countanswer3 and countanswer3 > countanswer2:
+                    choose(answers[2])
+                else:
+                    print(bad + 'Pick the highest scoring answer')
+                print(hardreturn)
+
+
 if __name__ == "__main__":
     try:
         config = ConfigParser.RawConfigParser()
         config.read(os.path.join(os.path.dirname(__file__), 'bot.cfg'))
+        #config.read(os.path.join(os.path.dirname(__file__), 'bot-523ce4ab538b.cfg'))
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = config.get(
-        'bot_config', 'GOOGLE_APPLICATION_CREDENTIALS')
+            'bot_config', 'GOOGLE_APPLICATION_CREDENTIALS')
 
         customsearch_results = config.get('bot_config', 'customsearch_results')
         customsearch_id = config.get('bot_config', 'customsearch_id')
         customsearch_developerKey = config.get(
             'bot_config', 'customsearch_developerKey')
 
-        if not ".json" in os.environ("GOOGLE_APPLICATION_CREDENTALS"):
-            print ("API keys misconfigured")
+        if not ".json" in os.environ["GOOGLE_APPLICATION_CREDENTIALS"] and not ":" in customsearch_id and not "_" in customsearch_developerKey:
+            print(bad + "API keys incorrectly configured")
             exit(1)
 
         parser = argparse.ArgumentParser()
         parser.add_argument("-v", "--verbose",
-                        help="increase output verbosity", action="store_true")
+                            help="increase output verbosity", action="store_true")
+        parser.add_argument("-s", "--sample",
+                            help="use sample images", action="store_true")
         parser.add_argument("-i", "--input_file",
-                        help="use specific images")
+                            help="use specific images")
         args = parser.parse_args()
 
 
         if args.input_file:
             find_answer(os.path.join(
-                os.path.dirname(__file__), args.input.file)
-            )
+                os.path.dirname(__file__), args.input_file))
+
         elif args.sample:
             sample_file_names = [
                 'test_question.jpeg', 'test_question2.png', 'test_question3.jpg']
@@ -255,7 +276,6 @@ if __name__ == "__main__":
                 find_answer(os.path.join(os.path.dirname(__file__), file_name))
         else:
             parser.print_help()
-
     except KeyboardInterrupt:
         print(hardreturn + bad + 'Exiting...')
         exit(0)
