@@ -225,11 +225,14 @@ if __name__ == "__main__":
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = config.get(
         'bot_config', 'GOOGLE_APPLICATION_CREDENTIALS')
 
-        if not
-    customsearch_results = config.get('bot_config', 'customsearch_results')
-    customsearch_id = config.get('bot_config', 'customsearch_id')
-    customsearch_developerKey = config.get(
-        'bot_config', 'customsearch_developerKey')
+        customsearch_results = config.get('bot_config', 'customsearch_results')
+        customsearch_id = config.get('bot_config', 'customsearch_id')
+        customsearch_developerKey = config.get(
+            'bot_config', 'customsearch_developerKey')
+
+        if not ".json" in os.environ("GOOGLE_APPLICATION_CREDENTALS"):
+            print ("API keys misconfigured")
+            exit(1)
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose",
