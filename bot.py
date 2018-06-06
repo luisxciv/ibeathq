@@ -182,7 +182,7 @@ def choose(answer):
 
 
 def print_answers(num, answer, count):
-    print(good + 'Option %s: %s' % (str(num), answer) + BPurple + " " + str(count) + ' results' + end)
+    print(good + 'Option %s: %s' % (str(num), answer) + BPurple + " " + str(count) + ' results in google' + end)
 
 
 def find_answer(path):
@@ -248,7 +248,7 @@ def find_answer(path):
         elif answer3count > answer1count and answer3count > answer2count:
             choose(answers[2])
         else:
-            print(bad + 'Pick that best answer')
+            print(bad + "Couldn't find an answer")
     elif answer1count > answer2count and answer1count > answer3count:
         choose(answers[0])
     elif answer2count > answer1count and answer2count > answer3count:
@@ -256,7 +256,7 @@ def find_answer(path):
     elif answer3count > answer1count and answer3count > answer2count:
         choose(answers[2])
     else:
-        print(bad + 'Pick the highest scoring answer')
+        print(bad + "Couldn't find an answer")
     print(hardreturn)
 
 
@@ -278,27 +278,19 @@ if __name__ == "__main__":
 
         parser = argparse.ArgumentParser()
         parser.add_argument("-v", "--verbose",
-                            help="increase output verbosity", action="store_true")
-        parser.add_argument("-s", "--sample",
-                            help="use sample images", action="store_true")
+                            help="verbosity", action="store_true")
         parser.add_argument("-i", "--input_file",
-                            help="use specific images")
+                            help="specify HQ trivia screenshot file")
         args = parser.parse_args()
 
 
         if args.input_file:
             find_answer(os.path.join(
                 os.path.dirname(__file__), args.input_file))
-
-        elif args.sample:
-            sample_file_names = [
-                'test_question.jpeg', 'test_question2.png', 'test_question3.jpg']
-            for file_name in sample_file_names:
-                find_answer(os.path.join(os.path.dirname(__file__), file_name))
         else:
             parser.print_help()
     except KeyboardInterrupt:
-        print(hardreturn + bad + 'Exiting...')
+        print(hardreturn + bad + 'The process was terminated')
         exit(0)
     except Exception as e:
         print(bad + '%s: %s' % (type(e).__name__, str(e)))
