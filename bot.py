@@ -139,7 +139,7 @@ def get_question(blocks):
                     return blocks[key + 3]
             except ValueError, KeyError:
                 pass
-    print(bad + "Error getting question, defaulting")
+    print(bad + "Error getting question")
     return blocks[3]
 
 
@@ -148,7 +148,7 @@ def get_answers(question, blocks):
         for key, value in blocks.iteritems():
             if question in value:
                 return [blocks[key + 1], blocks[key + 2], blocks[key + 3]]
-        print(bad + "Error getting answers, defaulting")
+        print(bad + "Error getting answers")
         return [blocks[4], blocks[5], blocks[6]]
     except KeyError as e:
         print(bad + str(e))
