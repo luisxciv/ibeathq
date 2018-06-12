@@ -4,7 +4,7 @@ ibeathq is a python script that will help you win that juicey HQ Trivia prize. I
 ```bash
 ./bot.py -i n64.png
 ```
-![alt text](https://i.gyazo.com/ca54a35b815ed569588f87cd323a6f45.png)
+![alt text](https://i.gyazo.com/543ee0c2c94fd2ae09cf76efb1799365.png)
 
 ## Dependencies
 
@@ -33,4 +33,8 @@ pip install -r requirements.txt
  
  7.  Set `developerKey` in the config file to your Developer API Key found in the [Credentials Page](https://console.developers.google.com/apis/credentials)
  
- 8. Test it 
+ 8. Test it : 
+ 
+ ![alt text](https://i.gyazo.com/ca54a35b815ed569588f87cd323a6f45.png)
+
+ 
