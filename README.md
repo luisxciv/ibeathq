@@ -4,8 +4,9 @@ ibeathq is a python script that will help you win that juicey HQ Trivia prize. I
 ```bash
 ./bot.py -i n64.png
 ```
-![alt text](https://i.gyazo.com/543ee0c2c94fd2ae09cf76efb1799365.png)
-
+<p align="center">
+  <img src="https://i.gyazo.com/543ee0c2c94fd2ae09cf76efb1799365.png?raw=true" alt="N64"/>
+</p>
 ## Dependencies
 
 The following modules are required for ibeathq to work 
