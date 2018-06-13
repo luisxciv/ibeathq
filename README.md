@@ -9,7 +9,7 @@ ibeathq is a python script that will help you win that juicey HQ Trivia prize. I
 </p>
 
 ## Dependencies
-The following modules are required for ibeathq to work 
+The following modules are required
 
     google-cloud-vision
     google-cloud-language
