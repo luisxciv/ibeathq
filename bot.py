@@ -277,8 +277,6 @@ if __name__ == "__main__":
             exit(1)
 
         parser = argparse.ArgumentParser()
-        parser.add_argument("-v", "--verbose",
-                            help="verbosity", action="store_true")
         parser.add_argument("-i", "--input_file",
                             help="specify HQ trivia screenshot file")
         args = parser.parse_args()
