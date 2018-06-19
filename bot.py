@@ -19,12 +19,6 @@ from googleapiclient.discovery import build
 
 from time import strftime, gmtime
 
-white = '\033[1;97m'
-ICyan = "\033[0;96m"
-Blue = "\033[0;34m"
-green = '\033[1;32m'
-red = '\033[1;31m'
-yellow = '\033[1;33m'
 BIPurple = "\033[1;92m"
 BPurple = "\033[0;92m"
 On_White = "\033[47m"
@@ -80,7 +74,6 @@ def get_blocks(path):
 
 
 def get_entity(text):
-    """Detects entities in the text."""
     client = language.LanguageServiceClient()
 
     if isinstance(text, six.binary_type):
@@ -101,8 +94,6 @@ def get_entity(text):
             results = ' '.join([entities[0].name, entities[1].name])
         except IndexError:
             results = entities[0].name
-
-
     return results
 
 
@@ -178,7 +169,6 @@ def search(service, question, answers, queue):
 
 def choose(answer):
     print(good + 'Choose ' + BIPurple + answer + end)
-
 
 
 def print_answers(num, answer, count):
@@ -280,7 +270,6 @@ if __name__ == "__main__":
         parser.add_argument("-i", "--input_file",
                             help="specify HQ trivia screenshot file")
         args = parser.parse_args()
-
 
         if args.input_file:
             find_answer(os.path.join(

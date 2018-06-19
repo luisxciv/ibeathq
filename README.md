@@ -16,10 +16,10 @@ The following modules are required
     google-api-python-client
     
 ## How to Install 
-1. Install the required packages with pip 
+1. Install the required packages with pip, execute the following on the commandine
 
 ```bash
-pip install -r requirements.txt
+path/to/python.exe pip install -r requirements.txt
 ```
 2. Enable API's in Google Cloud Console, You'll need to set-up a billing account but won't be charged anything. [Google Cloud](https://console.cloud.google.com/home/dashboard).
     Enable [Google Cloud Natural Language API](https://console.cloud.google.com/apis/library/language.googleapis.com), [Google Cloud Custom Search API](https://console.cloud.google.com/apis/api/customsearch.googleapis.com) and [Google Cloud Vision API](https://console.cloud.google.com/apis/library/vision.googleapis.com).
