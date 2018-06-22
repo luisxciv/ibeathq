@@ -209,7 +209,7 @@ def find_answer(path):
     search3 = threading.Thread(target=search_entity, args=(
         service, question, answers, results2_queue))
     search3.start()
-
+##
     items = json.dumps(results1['items']).lower()
     answer1count = items.count(answers[0].lower())
     answer2count = items.count(answers[1].lower())
