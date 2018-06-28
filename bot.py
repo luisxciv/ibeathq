@@ -94,6 +94,8 @@ def get_entity(text):
             results = ' '.join([entities[0].name, entities[1].name])
         except IndexError:
             results = entities[0].name
+            if args.verbose:
+                print(important + 'Entities: ' + results + hardreturn)
     return results
 
 
@@ -267,6 +269,8 @@ if __name__ == "__main__":
             exit(1)
 
         parser = argparse.ArgumentParser()
+        parser.add_argument("-v", "--verbose",
+                            help="script verbosity")
         parser.add_argument("-i", "--input_file",
                             help="specify HQ trivia screenshot file")
         args = parser.parse_args()
