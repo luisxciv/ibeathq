@@ -273,6 +273,7 @@ if __name__ == "__main__":
                             help="script verbosity")
         parser.add_argument("-i", "--input_file",
                             help="specify HQ trivia screenshot file")
+        parser.add_argument("-a", "--android", help="for use with android emulator" )
         args = parser.parse_args()
 
         if args.input_file:
