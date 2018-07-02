@@ -4,12 +4,10 @@ import os
 import six
 import json
 import Queue
-import urllib2
 import argparse
 import threading
 import ConfigParser
 from ssl import SSLError
-from google.auth import exceptions
 from google.cloud import vision
 from google.cloud.vision import types
 from google.cloud import language
@@ -17,7 +15,6 @@ from google.cloud.language import enums
 from google.cloud.language import types as lanuage_types
 from googleapiclient.discovery import build
 
-from time import strftime, gmtime
 
 BIPurple = "\033[1;92m"
 BPurple = "\033[0;92m"
@@ -34,7 +31,7 @@ run = '\033[1;97m[~]\033[1;m '
 HQValues = ['HQ', 'HO', 'H0']
 
 
-def get_blocks(path):
+def blocks(path):
     client = vision.ImageAnnotatorClient()
 
     with io.open(path, 'rb') as image_file:
@@ -180,10 +177,10 @@ def print_answers(num, answer, count):
 def find_answer(path):
     if args.verbose:
         print(run + 'Filename: ' + path)
-    blocks = get_blocks(path)
-    question = get_question(blocks)
+    block = blocks(path)
+    question = get_question(block)
     print(que + 'Question: ' + question + hardreturn)
-    answers = get_answers(question, blocks)
+    answers = get_answers(question, block)
     service = build("customsearch", "v1",
                     developerKey=customsearch_developerKey)
 
