@@ -4,9 +4,11 @@ import os
 import six
 import json
 import Queue
+import urllib2
 import argparse
 import threading
 import ConfigParser
+from time import gmtime, strftime
 from ssl import SSLError
 from google.cloud import vision
 from google.cloud.vision import types
@@ -276,6 +278,34 @@ if __name__ == "__main__":
         if args.input_file:
             find_answer(os.path.join(
                 os.path.dirname(__file__), args.input_file))
+        elif args.android:
+                HQTriviaURL = "https://api-quiz.hype.space/shows/now?type=hq"
+                HQTriviaResponse = json.load(urllib2.urlopen(HQTriviaURL))
+                if not HQTriviaResponse["active"]:
+                    print(bad + "HQ Trivia does not appear to be live at the moment.")
+                today_folder = os.path.join(os.path.dirname(
+                    __file__), 'screenshots', str(strftime("%Y-%m-%d", gmtime())))
+                if not os.path.exists(today_folder):
+                    os.makedirs(today_folder)
+                print(
+                        info + "Make sure your android device is connected via ADB" + hardreturn)
+                questionNum = 1
+                while questionNum <= 15:
+                    screencap_name = strftime(
+                        "%Y-%m-%d_%H-%M-%S", gmtime()) + '_' + str(questionNum) + '.png'
+                    raw_input(
+                        que + 'Click enter when question is on the screen ')
+                    os.system(
+                        'adb shell screencap -p /sdcard/HQ/' + screencap_name)
+                    os.system('adb pull /sdcard/HQ/' + screencap_name)
+                    screencap_file = os.path.join(
+                        os.path.dirname(__file__), screencap_name)
+                    find_answer(screencap_file)
+                    os.rename(screencap_file, os.path.join(
+                        today_folder, screencap_name))
+                    os.system('adb shell rm /sdcard/HQ/' +
+                              screencap_name)
+                    questionNum += 1
         else:
             parser.print_help()
     except KeyboardInterrupt:
