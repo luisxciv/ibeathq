@@ -78,7 +78,6 @@ def get_entity(text):
     if isinstance(text, six.binary_type):
         text = text.decode('utf-8')
 
-    # Instantiates a plain text document.
     document = lanuage_types.Document(
         content=text,
         type=enums.Document.Type.PLAIN_TEXT)
