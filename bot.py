@@ -308,6 +308,7 @@ if __name__ == "__main__":
                     questionNum += 1
         else:
             parser.print_help()
+
     except KeyboardInterrupt:
         print(hardreturn + bad + 'The process was terminated')
         exit(0)
